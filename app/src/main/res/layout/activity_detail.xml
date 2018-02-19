@@ -73,14 +73,13 @@
             android:id="@+id/ingredients_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/description_tv"
+            app:layout_constraintEnd_toEndOf="@+id/also_known_tv"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/also_known_tv"
-            tools:text="some ingredients" />
+            tools:text="some ingredients some ingredients some ingredients some ingredients"
+            android:layout_marginLeft="8dp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -99,10 +98,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/description_tv"
+            app:layout_constraintEnd_toEndOf="@+id/origin_tv"
             app:layout_constraintStart_toEndOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/origin_tv"
-            tools:text="demo text for also known as"
+            tools:text="demo text for also known as demo text for also known as demo text for also known as demo text for also known as"
             android:layout_marginLeft="8dp" />
 
         <TextView

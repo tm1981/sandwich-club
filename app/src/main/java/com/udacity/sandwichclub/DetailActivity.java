@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        Sandwich sandwich = JsonUtils.parseSandwichJson(json,this);
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
@@ -63,45 +64,22 @@ public class DetailActivity extends AppCompatActivity {
 
 
         List<String> alsoKnowsAsList = sandwich.getAlsoKnownAs();
-        StringBuilder alsoKnowsAsSb = new StringBuilder();
-        int i = 0;
-        for (String temp : alsoKnowsAsList ) {
-            alsoKnowsAsSb.append(temp);
-            if (i++ == alsoKnowsAsList.size() - 1) {
-                alsoKnowsAsSb.append("");
-            } else {
-                alsoKnowsAsSb.append(", ");
-            }
-
-        }
+        String alsoKnownsAs = TextUtils.join(", ",alsoKnowsAsList);
 
         List<String> ingredientsList = sandwich.getIngredients();
-        StringBuilder ingredientsSb = new StringBuilder();
-        i = 0;
-        for (String temp : ingredientsList ) {
-            ingredientsSb.append(temp);
-            if (i++ == ingredientsList.size() - 1) {
-                ingredientsSb.append("");
-            } else {
-                ingredientsSb.append(", ");
-            }
+        String ingredients = TextUtils.join(", ",ingredientsList);
 
-        }
 
-        String alsoKnownsAs = alsoKnowsAsSb.toString();
         if (alsoKnownsAs.equals("")) {
-            //alsoKnownsAs = "N/A";
             alsoKnowsAsTV.setVisibility(View.INVISIBLE);
             alsoKnowsAsTVLabel.setVisibility(View.INVISIBLE);
             alsoKnowsAsTV.setHeight(0);
             alsoKnowsAsTVLabel.setHeight(0);
 
         }
-        String ingredients = ingredientsSb.toString();
         alsoKnowsAsTV.setText(alsoKnownsAs);
         descriptionTV.setText(sandwich.getDescription());
         if (sandwich.getPlaceOfOrigin().equals("")) {
-            //placeOfOrigin.setText("N/A");
             placeOfOrigin.setVisibility(View.INVISIBLE);
             placeOfOrigin.setHeight(0);
             placeOfOriginLabel.setVisibility(View.INVISIBLE);

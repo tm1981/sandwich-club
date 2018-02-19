@@ -1,8 +1,8 @@
 package com.udacity.sandwichclub.utils;
 
-import android.nfc.Tag;
-import android.util.Log;
+import android.content.Context;
 
+import com.udacity.sandwichclub.R;
 import com.udacity.sandwichclub.model.Sandwich;
 
 import org.json.JSONArray;
@@ -12,11 +12,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class JsonUtils {
 
-    public static Sandwich parseSandwichJson(String json) {
+    public static Sandwich parseSandwichJson(String json,Context context) {
 
         JSONObject jObject;
         String placeOfOrigin = null;
@@ -28,21 +26,21 @@ public class JsonUtils {
 
         try {
             jObject = new JSONObject(json);
-            placeOfOrigin = jObject.getString("placeOfOrigin");
-            description = jObject.getString("description");
-            image = jObject.getString("image");
-            JSONObject name = jObject.getJSONObject("name");
-            mainName = name.getString("mainName");
-            alsoKnownAs = name.getJSONArray("alsoKnownAs");
-            ingredients = jObject.getJSONArray("ingredients");
+            placeOfOrigin = jObject.optString(context.getString(R.string.key_place_of_origin));
+            description = jObject.optString(context.getString(R.string.key_description));
+            image = jObject.optString(context.getString(R.string.key_image));
+            JSONObject name = jObject.optJSONObject(context.getString(R.string.key_name));
+            mainName = name.optString(context.getString(R.string.key_main_name));
+            alsoKnownAs = name.optJSONArray(context.getString(R.string.key_alsoknownas));
+            ingredients = jObject.optJSONArray(context.getString(R.string.key_ingredients));
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        List<String> knownAs = new ArrayList<String>();
-        List<String> ingredientsList = new ArrayList<String>();
+        List<String> knownAs = new ArrayList<>();
+        List<String> ingredientsList = new ArrayList<>();
 
         if (alsoKnownAs !=null) {
             for (int i=0; i < alsoKnownAs.length() ; i++) {
@@ -64,15 +62,6 @@ public class JsonUtils {
             }
         }
 
-        Sandwich sandwich = new Sandwich();
-        sandwich.setMainName(mainName);
-        sandwich.setDescription(description);
-        sandwich.setImage(image);
-        sandwich.setPlaceOfOrigin(placeOfOrigin);
-        sandwich.setAlsoKnownAs(knownAs);
-        sandwich.setIngredients(ingredientsList);
-
-
-        return sandwich;
+        return new Sandwich(mainName, knownAs, placeOfOrigin, description, image, ingredientsList);
     }
 }
